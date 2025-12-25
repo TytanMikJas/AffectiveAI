@@ -1,0 +1,32 @@
+[project]
+name = "affective-computing-project"
+version = "0.1.0"
+description = "The impact of video signal degradation on emotion detection effectiveness: Comparison of SOTA models and dedicated CNN networks on RAF-DB and KDEF datasets."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "TytanMikJas", email = "mikjas02@gmail.com" }
+]
+dependencies = [
+    "numpy==2.2.0",
+    "pandas==2.3.3",
+    "opencv-python==4.12.0.88",
+    "pillow==12.0.0",
+    "deepface==0.0.96",
+    "torch==2.9.1",
+    "scikit-learn==1.7.0",
+    "matplotlib==3.10.8",
+    "seaborn==0.13.2",
+    "streamlit==1.52.2",
+    "tqdm==4.67.1",
+    "ipykernel==7.1.0",
+    "notebook==7.5.1",
+    "pre-commit==4.5.1",
+    "tf-keras==2.20.1",
+    "torchvision==0.24.1"
+]
+
+[tool.ruff]
+line-length = 88
+lint.select = ["E", "F", "W", "I"]
+lint.ignore = ["E501"]
