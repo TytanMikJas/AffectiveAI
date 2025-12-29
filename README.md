@@ -1,15 +1,15 @@
 # Impact of Visual Degradation on Emotion Recognition
 
-This project analyzes how image quality degradation (noise, blur - degradations typical to old photos) affects the performance of emotion recognition models. I benchmark a pre-trained SOTA model (**DeepFace**) against a custom fine-tuned CNN (**PyTorch**) on **KDEF** dataset.
+This project analyzes how image quality degradation (noise, blur - degradations typical to old photos) affects the performance of emotion recognition models. I benchmark a pre-trained SOTA model (**DeepFace**) against a MobileNetV3 customly trained (**PyTorch**) on **KDEF** dataset.
 
 ## Project Status 🚧
 
 | Task | Description | Link to Notebook |
 | :--- | :--- | :--- |
-| ✅ **PoC** | Very basic Proof of Concept :) | [Open Notebook 02](notebooks/02_deepface_baseline.ipynb) |
+| ✅ **PoC** | Very basic Proof of Concept :) | [Open Notebook 00](notebooks/00_deepface_baseline.ipynb) |
 | ✅ **Data Generation** | Obtain and process KDEF dataset using custom degradation pipeline (adapted from my ongoing research paper on "Old Movie Restoration") | [Open Sample Images](data/samples/original_gray_degraded_sample.png) |
 | ✅ **EDA** | Exploratory Data Analysis of KDEF dataset and our degradation model | [Open Notebook 01](notebooks/01_data_exploration.ipynb) [Open as generated HTML](outputs/reports/01_data_exploration.html) |
-| ⬜ **Model Training** | Fine-tune MobileNetV3 | *Pending* |
+| ✅ **Model Training** | Train MobileNetV3 | [Open Notebook 02](notebooks/02_fine_tuning_mobilenet.ipynb) |
 | ⬜ **Evaluation** | Benchmark DeepFace vs Custom Model across 3 domains (Raw/Gray/Degraded) | *Pending* |
 | ⬜ **Analysis** | Metrics, Confusion Matrices, Overall analysis & Demographic Bias Check | *Pending* |
 | ⬜ **Demo App** | Streamlit dashboard for real-time Emotion Recognition with grayscale and degraded images | *Pending* |
