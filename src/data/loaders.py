@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 import pandas as pd
 import pytorch_lightning as pl
@@ -26,7 +27,7 @@ class KDEFDataset(Dataset):
 
         Args:
             df (pd.DataFrame): DataFrame containing a 'path' column with file paths to images.
-            transform (callable, optional): Optional transform to be applied on a sample.
+            transform (transforms.Compose): transform to be applied on a sample.
         """
         self.df = df
         self.transform = transform
@@ -34,9 +35,7 @@ class KDEFDataset(Dataset):
     def __len__(self) -> int:
         return len(self.df)
 
-    def __getitem__(
-        self, idx: int
-    ) -> tuple[Tensor, Tensor]:  # Zmieniłem type hint na Tensor, Tensor
+    def __getitem__(self, idx: int) -> tuple[Tensor, Tensor]:
         img_path = str(self.df.iloc[idx]["path"])
         try:
             image = Image.open(img_path).convert("RGB")
@@ -57,7 +56,7 @@ class KDEFDataset(Dataset):
 
         label_tensor = torch.tensor(label, dtype=torch.long)
 
-        return image, label_tensor # type: ignore
+        return image, label_tensor  # type: ignore
 
 
 class KDEFDataModule(pl.LightningDataModule):
@@ -67,9 +66,8 @@ class KDEFDataModule(pl.LightningDataModule):
 
     def __init__(
         self,
-        train_df: pd.DataFrame,
-        val_df: pd.DataFrame,
-        test_df: pd.DataFrame,
+        csv_file: str = "data/kdef_split.csv",
+        root_dir: str = "data/raw",
         batch_size: int = 32,
         num_workers: int = 4,
     ):
@@ -77,19 +75,31 @@ class KDEFDataModule(pl.LightningDataModule):
         Initialize the DataModule.
 
         Args:
-            train_df (pd.DataFrame): Training data.
-            val_df (pd.DataFrame): Validation data.
-            test_df (pd.DataFrame): Test data.
+            csv_file (str): Path to the CSV file containing data splits.
+            root_dir (str): Root directory where images are stored.
             batch_size (int): Size of batches for the DataLoaders.
             num_workers (int): Number of subprocesses to use for data loading.
         """
         super().__init__()
 
-        self.train_df = train_df
-        self.val_df = val_df
-        self.test_df = test_df
+        self.csv_file = csv_file
+        self.root_dir = Path(root_dir)
         self.batch_size = batch_size
         self.num_workers = num_workers
+
+    def setup(self, stage=None):
+        full_df = pd.read_csv(self.csv_file)
+
+        full_df["path"] = full_df["relative_path"].apply(lambda x: self.root_dir / x)
+
+        self.train_df = full_df[full_df["split"] == "train"]
+        self.val_df = full_df[full_df["split"] == "val"]
+        self.test_df = full_df[full_df["split"] == "test"]
+
+        print(f"Loaded data from {self.root_dir}:")
+        print(
+            f"Train: {len(self.train_df)}, Val: {len(self.val_df)}, Test: {len(self.test_df)}"
+        )
 
     def _get_transforms(self) -> dict[str, transforms.Compose]:
         """
@@ -131,7 +141,8 @@ class KDEFDataModule(pl.LightningDataModule):
             batch_size=self.batch_size,
             shuffle=True,
             num_workers=self.num_workers,
-            persistent_workers=True if self.num_workers > 0 else False,
+            persistent_workers=self.num_workers > 0,
+            pin_memory=True,
         )
 
     def val_dataloader(self):
@@ -140,7 +151,8 @@ class KDEFDataModule(pl.LightningDataModule):
             batch_size=self.batch_size,
             shuffle=False,
             num_workers=self.num_workers,
-            persistent_workers=True if self.num_workers > 0 else False,
+            persistent_workers=self.num_workers > 0,
+            pin_memory=True,
         )
 
     def test_dataloader(self):
@@ -149,5 +161,6 @@ class KDEFDataModule(pl.LightningDataModule):
             batch_size=self.batch_size,
             shuffle=False,
             num_workers=self.num_workers,
-            persistent_workers=True if self.num_workers > 0 else False,
+            persistent_workers=self.num_workers > 0,
+            pin_memory=True,
         )

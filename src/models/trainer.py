@@ -41,6 +41,9 @@ class EmotionClassifier(pl.LightningModule):
         self.val_precision = Precision(**metrics_kwargs)
         self.val_recall = Recall(**metrics_kwargs)
 
+        self.test_acc = Accuracy(task="multiclass", num_classes=num_classes)
+        self.test_f1 = F1Score(**metrics_kwargs)
+
         self.conf_mat = ConfusionMatrix(task="multiclass", num_classes=num_classes)
 
         if freeze_backbone:
@@ -88,13 +91,13 @@ class EmotionClassifier(pl.LightningModule):
         x, y = batch
         logits = self(x)
 
-        self.val_acc(logits, y)
-        self.val_f1(logits, y)
+        self.test_acc(logits, y)
+        self.test_f1(logits, y)
 
         self.conf_mat.update(logits, y)
 
-        self.log("test_acc", self.val_acc)
-        self.log("test_f1", self.val_f1)
+        self.log("test_acc", self.test_acc)
+        self.log("test_f1", self.test_f1)
 
     def configure_optimizers(self):  # type: ignore
         params = filter(lambda p: p.requires_grad, self.parameters())

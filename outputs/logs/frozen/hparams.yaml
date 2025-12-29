@@ -1,3 +1,0 @@
-freeze_backbone: true
-learning_rate: 0.001
-num_classes: 7

@@ -9,7 +9,7 @@ This project analyzes how image quality degradation (noise, blur - degradations 
 | ✅ **PoC** | Very basic Proof of Concept :) | [Open Notebook 00](notebooks/00_deepface_baseline.ipynb) |
 | ✅ **Data Generation** | Obtain and process KDEF dataset using custom degradation pipeline (adapted from my ongoing research paper on "Old Movie Restoration") | [Open Sample Images](data/samples/original_gray_degraded_sample.png) |
 | ✅ **EDA** | Exploratory Data Analysis of KDEF dataset and our degradation model | [Open Notebook 01](notebooks/01_data_exploration.ipynb) [Open as generated HTML](outputs/reports/01_data_exploration.html) |
-| ✅ **Model Training** | Train MobileNetV3 | [Open Notebook 02](notebooks/02_fine_tuning_mobilenet.ipynb) |
+| ✅ **Model Training** | Train MobileNetV3 | [Open Notebook 02](notebooks/02_training_mobilenet_v3.ipynb) |
 | ⬜ **Evaluation** | Benchmark DeepFace vs Custom Model across 3 domains (Raw/Gray/Degraded) | *Pending* |
 | ⬜ **Analysis** | Metrics, Confusion Matrices, Overall analysis & Demographic Bias Check | *Pending* |
 | ⬜ **Demo App** | Streamlit dashboard for real-time Emotion Recognition with grayscale and degraded images | *Pending* |
