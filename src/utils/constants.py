@@ -10,6 +10,7 @@ EMOTION_MAP = {
     "SU": "surprised",
 }
 EMOTION_IDX_MAP = {"AF": 0, "AN": 1, "DI": 2, "HA": 3, "NE": 4, "SA": 5, "SU": 6}
+IDX_TO_EMOTION = {v: k for k, v in EMOTION_IDX_MAP.items()}
 DEEPFACE_MAP = {
     "fear": "AF",
     "angry": "AN",
@@ -52,3 +53,5 @@ DATA_PATHS = {
     "Grayscale": Path("data/grayscale"),
     "Degraded": Path("data/degraded"),
 }
+CKPT_FROZEN = MODELS_DIR / "mobilenet_v3_kdef-frozen-epoch=19-val_f1=0.62.ckpt"
+CKPT_UNFROZEN = MODELS_DIR / "mobilenet_v3_kdef-unfrozen-epoch=41-val_f1=0.87.ckpt"
