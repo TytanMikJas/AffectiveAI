@@ -5,18 +5,29 @@ from PIL import Image
 from torchvision import transforms
 from tqdm.auto import tqdm
 
-from src.utils.constants import DATA_PATHS, DEEPFACE_MAP, EMOTION_IDX_MAP
+from src.utils.constants import (
+    DATA_PATHS,
+    DEEPFACE_MAP,
+    EMOTION_IDX_MAP,
+    IMAGENET_MEAN,
+    IMAGENET_STD,
+)
 
 transform_eval = transforms.Compose(
     [
         transforms.Resize((224, 224)),
         transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
+        transforms.Normalize(IMAGENET_MEAN, IMAGENET_STD),
     ]
 )
 
 
-def evaluate(df_test, device, model_frozen, model_unfrozen):
+def evaluate(
+    df_test: pd.DataFrame,
+    device: torch.device,
+    model_frozen: torch.nn.Module,
+    model_unfrozen: torch.nn.Module,
+) -> pd.DataFrame:
     results = []
 
     for _, row in tqdm(df_test.iterrows(), total=len(df_test)):

@@ -10,7 +10,6 @@ EMOTION_MAP = {
     "SU": "surprised",
 }
 EMOTION_IDX_MAP = {"AF": 0, "AN": 1, "DI": 2, "HA": 3, "NE": 4, "SA": 5, "SU": 6}
-IDX_TO_EMOTION = {v: k for k, v in EMOTION_IDX_MAP.items()}
 DEEPFACE_MAP = {
     "fear": "AF",
     "angry": "AN",
