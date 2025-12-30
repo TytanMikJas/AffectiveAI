@@ -2,6 +2,9 @@
 
 This project analyzes how image quality degradation (noise, blur - degradations typical to old photos) affects the performance of emotion recognition models. I benchmark a pre-trained SOTA model (**DeepFace**) against a MobileNetV3 customly trained (**PyTorch**) on **KDEF** dataset.
 
+!['img'](data/samples/streamlit_sample.png)
+
+
 ## Project Status ✅
 
 | Task | Description | Link to Notebook |
@@ -28,7 +31,7 @@ affective-computing-project/
 ├── src/                     # Source code
 │   ├── data/                # Scripts for loading and degrading images
 │   ├── models/              # DeepFace wrapper and PyTorch model definitions
-│   └── evaluation/          # Metrics and confusion matrices
+│   └── const/               # Constants and configuration
 │
 ├── outputs/                 # Saved models, logs, and generated reports
 ├── app.py                   # Streamlit demo application
