@@ -2,7 +2,7 @@
 
 This project analyzes how image quality degradation (noise, blur - degradations typical to old photos) affects the performance of emotion recognition models. I benchmark a pre-trained SOTA model (**DeepFace**) against a MobileNetV3 customly trained (**PyTorch**) on **KDEF** dataset.
 
-## Project Status 🚧
+## Project Status ✅
 
 | Task | Description | Link to Notebook |
 | :--- | :--- | :--- |
@@ -12,7 +12,7 @@ This project analyzes how image quality degradation (noise, blur - degradations 
 | ✅ **Model Training** | Train MobileNetV3 | [Open Notebook 02](notebooks/02_training_mobilenet_v3.ipynb) |
 | ✅ **Evaluation in Numbers** | Benchmark DeepFace vs Custom Model (transfer learning vs fine-tune) across 3 domains (Raw/Gray/Degraded).  Metrics, Confusion Matrices, Overall analysis & Demographic Bias Check | [Open Notebook 03](notebooks/03_evaluation.ipynb) |
 | ✅ **Visual Analysis** | Visualize how models performs on certain images | [Open Notebook 04](notebooks/04_visual_analysis.ipynb) |
-| ⬜ **Demo App** | Streamlit dashboard for real-time Emotion Recognition with grayscale and degraded images | *Pending* |
+| ✅ **Demo App** | Streamlit dashboard for real-time Emotion Recognition with grayscale and degraded images | [Open App](data/samples/streamlit_sample.png) |
 
 ## 📂 Project Structure
 
