@@ -1,3 +1,5 @@
+from pathlib import Path
+
 EMOTION_MAP = {
     "AF": "afraid",
     "AN": "angry",
@@ -8,6 +10,15 @@ EMOTION_MAP = {
     "SU": "surprised",
 }
 EMOTION_IDX_MAP = {"AF": 0, "AN": 1, "DI": 2, "HA": 3, "NE": 4, "SA": 5, "SU": 6}
+DEEPFACE_MAP = {
+    "fear": "AF",
+    "angry": "AN",
+    "disgust": "DI",
+    "happy": "HA",
+    "neutral": "NE",
+    "sad": "SA",
+    "surprise": "SU",
+}
 
 TARGET_ANGLES = ["S", "HL", "HR"]
 ANGLE_MAP = {
@@ -33,3 +44,11 @@ BUGGED_FILES = [
     "BM22DIHL",
     "BM24DIFL",
 ]
+
+SPLIT_CSV = Path("data/kdef_split.csv")
+MODELS_DIR = Path("outputs/models")
+DATA_PATHS = {
+    "Original": Path("data/raw"),
+    "Grayscale": Path("data/grayscale"),
+    "Degraded": Path("data/degraded"),
+}
