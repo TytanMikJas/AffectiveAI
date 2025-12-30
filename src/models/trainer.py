@@ -115,11 +115,6 @@ class EmotionClassifier(pl.LightningModule):
         }
 
     def train(self, mode: bool = True):  # type: ignore
-        """
-        SAFETY OVERRIDE:
-        Ensures that BatchNorm layers in the frozen backbone stay in eval mode,
-        even when the rest of the model is in train mode.
-        """
         super().train(mode)
 
         if self.hparams.freeze_backbone:  # type: ignore
