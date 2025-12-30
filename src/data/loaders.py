@@ -9,11 +9,8 @@ from torch import Tensor
 from torch.utils.data import DataLoader, Dataset
 from torchvision import transforms
 
-from src.utils.constants import (
-    EMOTION_IDX_MAP,
-    IMAGENET_MEAN,
-    IMAGENET_STD,
-)
+from src.const.maps import EMOTION_IDX_MAP
+from src.const.transforms import TRAIN_TRANSFORM, VAL_TRANSFORM
 
 
 class KDEFDataset(Dataset):
@@ -101,43 +98,9 @@ class KDEFDataModule(pl.LightningDataModule):
             f"Train: {len(self.train_df)}, Val: {len(self.val_df)}, Test: {len(self.test_df)}"
         )
 
-    def _get_transforms(self) -> dict[str, transforms.Compose]:
-        """
-        Define the data transformation pipelines for train, val, and test sets.
-
-        Returns:
-            dict[str, transforms.Compose]: Dictionary containing transformations.
-        """
-
-        return {
-            "train": transforms.Compose(
-                [
-                    transforms.Resize((224, 224)),
-                    transforms.RandomHorizontalFlip(),
-                    transforms.RandomRotation(10),
-                    transforms.ToTensor(),
-                    transforms.Normalize(IMAGENET_MEAN, IMAGENET_STD),
-                ]
-            ),
-            "val": transforms.Compose(
-                [
-                    transforms.Resize((224, 224)),
-                    transforms.ToTensor(),
-                    transforms.Normalize(IMAGENET_MEAN, IMAGENET_STD),
-                ]
-            ),
-            "test": transforms.Compose(
-                [
-                    transforms.Resize((224, 224)),
-                    transforms.ToTensor(),
-                    transforms.Normalize(IMAGENET_MEAN, IMAGENET_STD),
-                ]
-            ),
-        }
-
     def train_dataloader(self):
         return DataLoader(
-            KDEFDataset(self.train_df, transform=self._get_transforms()["train"]),
+            KDEFDataset(self.train_df, transform=TRAIN_TRANSFORM),
             batch_size=self.batch_size,
             shuffle=True,
             num_workers=self.num_workers,
@@ -147,7 +110,7 @@ class KDEFDataModule(pl.LightningDataModule):
 
     def val_dataloader(self):
         return DataLoader(
-            KDEFDataset(self.val_df, transform=self._get_transforms()["val"]),
+            KDEFDataset(self.val_df, transform=VAL_TRANSFORM),
             batch_size=self.batch_size,
             shuffle=False,
             num_workers=self.num_workers,
@@ -157,7 +120,7 @@ class KDEFDataModule(pl.LightningDataModule):
 
     def test_dataloader(self):
         return DataLoader(
-            KDEFDataset(self.test_df, transform=self._get_transforms()["test"]),
+            KDEFDataset(self.test_df, transform=VAL_TRANSFORM),
             batch_size=self.batch_size,
             shuffle=False,
             num_workers=self.num_workers,
